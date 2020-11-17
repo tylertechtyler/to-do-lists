@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+  <link rel="shortcut icon" type="image/x-icon" sizes="16x16 32x32 48x48 64x64" href="/favicon.png">
+
+  <title>To Do List</title>
+
+</head>
+
+<body>
+  <div id="page-container">
+<div class="content">
+  <div class="left">
+  <div id="myDIV" class="header">
+    <h2>To Do List</h2>
+    <input type="text" maxlength="50" id="myInput" placeholder="what ever shall I do?" onkeypress="handleKeyPress(event)">
+    <span onclick="newElement()" class="addBtn">Add</span>
+
+    <div class="mid-header">
+      <span onclick="saveList()" class="save-button">Save List</span>
+      <span onclick="readTasks()" class="load-button">Load Tasks</span>
+      </div>
+  </div>
+  </div>
+
+<div class="right">
+  <ul id="myUL" class="list-block">
+    <li>Hit the gym</li>
+    <li>Pay bills</li>
+    <li>Meet George</li>
+    <li>Buy eggs</li>
+    <li>Read a book</li>
+    <li>Organize office</li>
+  </ul>
+</div>
+</div>  
+  <footer id="footer">
+    
+  </footer>
+  </div>
+
+  <script>
+
+// Create a "close" button and append it to each list item
+var myNodelist = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < myNodelist.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  myNodelist[i].appendChild(span);
+}
+
+// Click on a close button to hide the current list item
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+// Add a "checked" symbol when clicking on a list item
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
+
+// Create a new list item when clicking on the "Add" button
+function newElement(Task) {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("myInput").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("You must write something!");
+  } else {
+    document.getElementById("myUL").appendChild(li);
+  }
+  document.getElementById("myInput").value = "";
+
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+
+    var myArray = [];
+myArray.push("something to store");
+myArray.push("something else to store");
+alert(myArray[0]);
+//This will alert "something to store"
+
+  }
+}
+//enter key instead of having to hit add button
+function handleKeyPress(e){
+  var key=e.keyCode || e.which;
+  if (key==13){
+     newElement();
+  }
+}
+
+/*
+// Save the list when button is pressed
+var saveButton = document.getElementById("save-button");
+    
+function saveList() {
+  alert("List Saved!")  
+
+}*/
+
+//Load the list when button is pressed
+var loadButton = document.getElementById("load-button");
+    
+function readTasks() {
+  alert("Tasks Loaded!")
+
+}
+
+// function to add todos to local storage
+function addToLocalStorage(todos) {
+  // conver the array to string then store it.
+  localStorage.setItem('todos', JSON.stringify(todos));
+  // render them to screen
+  renderTodos(todos);
+}
+
+
+  </script>
+</body>
+</html>
